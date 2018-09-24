@@ -1,7 +1,7 @@
 package main
 
-import "../proto"
-import "./client"
+import "github.com/YuheiTakagawa/tsukupro-server/proto"
+import "github.com/YuheiTakagawa/tsukupro-server/client_run/client"
 import (
 	"fmt"
 	"log"

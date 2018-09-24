@@ -1,6 +1,6 @@
 package client
 
-import "../../proto"
+import "github.com/YuheiTakagawa/tsukupro-server/proto"
 import (
 	"context"
 	"fmt"
@@ -8,11 +8,11 @@ import (
 
 type ClientInfo struct {
 	Conn proto.TsukuproClient
-	Id string
+	Id   string
 	User *proto.User
 }
 
-func (c *ClientInfo) Search() (error) {
+func (c *ClientInfo) Search() error {
 	message := &proto.UserId{
 		Id: c.Id,
 	}
@@ -23,23 +23,23 @@ func (c *ClientInfo) Search() (error) {
 	return nil
 }
 
-func (c *ClientInfo) Judgement(txid string, res bool) (error) {
+func (c *ClientInfo) Judgement(txid string, res bool) error {
 	message := &proto.Judge{
 		UserId: c.Id,
-		TxId: "000",
-		Res: res,
+		TxId:   "000",
+		Res:    res,
 	}
 	fmt.Printf("judge: %s\n", message)
 
 	return nil
 }
 
-func (c *ClientInfo) Judge(txid string) (error) {
+func (c *ClientInfo) Judge(txid string) error {
 	c.Judgement(txid, true)
 	return nil
 }
 
-func (c *ClientInfo) Create() (error) {
+func (c *ClientInfo) Create() error {
 	fmt.Printf("user info %s\n", c.User)
 	res, _ := c.Conn.NewUser(context.TODO(), c.User)
 	fmt.Printf("result: %s\n", res)
