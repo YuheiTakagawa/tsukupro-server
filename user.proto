@@ -1,0 +1,47 @@
+syntax = "proto3";
+
+package proto;
+
+service Tsukupro {
+    rpc NewUser (User) returns (Status) {
+    }
+
+    rpc EditProf (Proreq) returns (Status) {
+    }
+
+    rpc SearchProf (UserId) returns (ProreqList) {
+    }
+}
+
+// confirm between server
+message User {
+    string user_id = 1;
+    string name = 2;
+    string birth = 3; 
+}
+
+message Proreq {
+    string tx_id = 1;
+    string user_id = 2;
+    double type = 3;
+    bytes data = 4;
+}
+
+// uses only in response
+message Status {
+    string message = 1;
+}
+
+message ProreqList {
+    repeated Proreq req = 1;
+}
+
+message UserId {
+    string id = 1;
+}
+
+message Judge {
+    string user_id = 1;
+    string tx_id = 2;
+    bool res = 3;
+}
