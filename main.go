@@ -1,7 +1,7 @@
 package main
 
-import "./handler"
-import "./proto"
+import "github.com/YuheiTakagawa/tsukupro-server/handler"
+import "github.com/YuheiTakagawa/tsukupro-server/proto"
 import (
 	"fmt"
 	"google.golang.org/grpc"

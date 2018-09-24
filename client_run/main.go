@@ -29,13 +29,13 @@ func main() {
 	cli := proto.NewTsukuproClient(conn)
 
 	userinfo := &proto.User{
-		UserId: "000",
+		UserId: 10,
 		Name:   "Yuhei",
 		Birth:  "1995-11-27",
 	}
 	c := &client.ClientInfo{
 		Conn: cli,
-		Id:   "im",
+		Id:   "432",
 		User: userinfo,
 	}
 

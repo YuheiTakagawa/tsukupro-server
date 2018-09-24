@@ -14,7 +14,7 @@ type ClientInfo struct {
 
 func (c *ClientInfo) Search() error {
 	message := &proto.UserId{
-		Id: c.Id,
+		Id: c.User.UserId,
 	}
 
 	res, _ := c.Conn.SearchProf(context.TODO(), message)
@@ -25,7 +25,7 @@ func (c *ClientInfo) Search() error {
 
 func (c *ClientInfo) Judgement(txid string, res bool) error {
 	message := &proto.Judge{
-		UserId: c.Id,
+		UserId: c.User.UserId,
 		TxId:   "000",
 		Res:    res,
 	}

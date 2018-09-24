@@ -1,9 +1,9 @@
 package handler
 
 import (
-	"../controller"
-	pb "../proto"
 	"context"
+	"github.com/YuheiTakagawa/tsukupro-server/controller"
+	pb "github.com/YuheiTakagawa/tsukupro-server/proto"
 )
 
 type Tsukupro struct{}
