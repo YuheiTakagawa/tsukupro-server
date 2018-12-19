@@ -11,6 +11,9 @@ service Tsukupro {
 
     rpc SearchProf (UserId) returns (ProreqList) {
     }
+
+    rpc SendJudge (Judge) returns (Status) {
+    }
 }
 
 // confirm between server

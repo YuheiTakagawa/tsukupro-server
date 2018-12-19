@@ -29,6 +29,11 @@ func (s *Tsukupro) EditProf(ctx context.Context, proreq *pb.Proreq) (*pb.Status,
 }
 
 func (s *Tsukupro) SearchProf(ctx context.Context, id *pb.UserId) (*pb.ProreqList, error) {
-	ret, _ := controller.SearchProfController(id)
-	return ret, nil
+	ret, err := controller.SearchProfController(id)
+	return ret, err
+}
+
+func (s *Tsukupro) SendJudge(ctx context.Context, judge *pb.Judge) (*pb.Status, error) {
+	ret, err := controller.ReflectJudge(judge)
+	return ret, err
 }

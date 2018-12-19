@@ -2,8 +2,10 @@ package client
 
 import "github.com/YuheiTakagawa/tsukupro-server/proto"
 import (
+	"bufio"
 	"context"
 	"fmt"
+	"os"
 )
 
 type ClientInfo struct {
@@ -18,24 +20,36 @@ func (c *ClientInfo) Search() error {
 	}
 
 	res, _ := c.Conn.SearchProf(context.TODO(), message)
-	fmt.Printf("result: %s\n", res)
-	c.Judge("000")
+	for _, r := range res.Req {
+		fmt.Printf("result: %s\n", r)
+		c.Judge(r.TxId)
+		fmt.Println("")
+	}
 	return nil
 }
 
-func (c *ClientInfo) Judgement(txid string, res bool) error {
+func (c *ClientInfo) Judgement(txid string, judgement bool) *proto.Judge {
 	message := &proto.Judge{
 		UserId: c.User.UserId,
-		TxId:   "000",
-		Res:    res,
+		TxId:   txid,
+		Res:    judgement,
 	}
 	fmt.Printf("judge: %s\n", message)
 
-	return nil
+	return message
 }
 
 func (c *ClientInfo) Judge(txid string) error {
-	c.Judgement(txid, true)
+	judgement := false
+	stdin := bufio.NewScanner(os.Stdin)
+	fmt.Printf("Judge this tx id=%s  \"true\" or \"false\"?\n", txid)
+	stdin.Scan()
+	if jstr := stdin.Text(); jstr == "true" {
+		judgement = true
+	}
+	judge := c.Judgement(txid, judgement)
+	res, _ := c.Conn.SendJudge(context.TODO(), judge)
+	fmt.Printf("result: %s\n", res)
 	return nil
 }
 

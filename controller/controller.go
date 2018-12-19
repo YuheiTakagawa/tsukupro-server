@@ -44,8 +44,13 @@ func SearchProfController(id *pb.UserId) (*pb.ProreqList, error) {
 		Data:   []byte("ok"),
 	}
 	list = append(list, proreq)
-	proreq.UserId = 30
-	list = append(list, proreq)
+	proreq2 := &pb.Proreq{
+		TxId:   "001",
+		UserId: 1,
+		Type:   2,
+		Data:   []byte("name"),
+	}
+	list = append(list, proreq2)
 	return &pb.ProreqList{
 		Req: list,
 	}, nil
@@ -78,4 +83,11 @@ func setdata(user *pb.User, dbmap *gorp.DbMap) error {
 		fmt.Printf("	%d: %v\n", x, p)
 	}
 	return nil
+}
+
+func ReflectJudge(judge *pb.Judge) (*pb.Status, error) {
+	fmt.Printf("Getting Judge %s\n", judge)
+	return &pb.Status{
+		Message: "OK",
+	}, nil
 }
