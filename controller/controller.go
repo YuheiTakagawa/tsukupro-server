@@ -95,3 +95,18 @@ func ReflectJudge(judge *pb.Judge) (*pb.Status, error) {
 		Message: "OK",
 	}, nil
 }
+
+func FriendRequestController(req *pb.FriendReq) (*pb.Status, error) {
+	//	dbmap := db.InitDb()
+	//	defer dbmap.Db.Close()
+
+	// checking I have the tx
+	fmt.Printf("id: %d, friend: %d\n", req.UserId, req.FriendId)
+	//(req.UserId, req.FriendId)
+	/*
+	 */
+
+	return &pb.Status{
+		Message: "OK",
+	}, nil
+}

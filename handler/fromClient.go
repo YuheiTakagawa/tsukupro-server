@@ -38,3 +38,8 @@ func (s *Tsukupro) SendJudge(ctx context.Context, judge *pb.Judge) (*pb.Status, 
 	ret, err := controller.ReflectJudge(judge)
 	return ret, err
 }
+
+func (s *Tsukupro) FriendRequest(ctx context.Context, req *pb.FriendReq) (*pb.Status, error) {
+	ret, err := controller.FriendRequestController(req)
+	return ret, err
+}
