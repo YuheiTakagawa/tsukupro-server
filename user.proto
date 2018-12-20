@@ -9,7 +9,7 @@ service Tsukupro {
     rpc EditProf (Proreq) returns (Status) {
     }
 
-    rpc SearchProf (UserId) returns (ProreqList) {
+    rpc SearchProf (UserId) returns (stream Proreq) {
     }
 
     rpc SendJudge (Judge) returns (Status) {
@@ -33,10 +33,6 @@ message Proreq {
 // uses only in response
 message Status {
     string message = 1;
-}
-
-message ProreqList {
-    repeated Proreq req = 1;
 }
 
 message UserId {

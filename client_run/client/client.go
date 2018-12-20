@@ -1,11 +1,13 @@
 package client
 
-import "github.com/YuheiTakagawa/tsukupro-server/proto"
 import (
 	"bufio"
 	"context"
 	"fmt"
+	"io"
 	"os"
+
+	"github.com/YuheiTakagawa/tsukupro-server/proto"
 )
 
 type ClientInfo struct {
@@ -19,8 +21,22 @@ func (c *ClientInfo) Search() error {
 		Id: c.User.UserId,
 	}
 
-	res, _ := c.Conn.SearchProf(context.TODO(), message)
-	for _, r := range res.Req {
+	var list []*proto.Proreq
+	stream, _ := c.Conn.SearchProf(context.TODO(), message)
+	for {
+		proreq, err := stream.Recv()
+		if err == io.EOF {
+			fmt.Println("Get all profs")
+			break
+		}
+
+		if err != nil {
+			fmt.Println(err)
+			continue
+		}
+		list = append(list, proreq)
+	}
+	for _, r := range list {
 		fmt.Printf("result: %s\n", r)
 		c.Judge(r.TxId)
 		fmt.Println("")

@@ -2,6 +2,7 @@ package handler
 
 import (
 	"context"
+
 	"github.com/YuheiTakagawa/tsukupro-server/controller"
 	pb "github.com/YuheiTakagawa/tsukupro-server/proto"
 )
@@ -28,9 +29,9 @@ func (s *Tsukupro) EditProf(ctx context.Context, proreq *pb.Proreq) (*pb.Status,
 	}
 }
 
-func (s *Tsukupro) SearchProf(ctx context.Context, id *pb.UserId) (*pb.ProreqList, error) {
-	ret, err := controller.SearchProfController(id)
-	return ret, err
+func (s *Tsukupro) SearchProf(id *pb.UserId, stream pb.Tsukupro_SearchProfServer) error {
+	err := controller.SearchProfController(id, stream)
+	return err
 }
 
 func (s *Tsukupro) SendJudge(ctx context.Context, judge *pb.Judge) (*pb.Status, error) {

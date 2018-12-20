@@ -3,6 +3,7 @@ package controller
 import "github.com/YuheiTakagawa/tsukupro-server/db"
 import (
 	"fmt"
+
 	pb "github.com/YuheiTakagawa/tsukupro-server/proto"
 	gorp "gopkg.in/gorp.v1"
 )
@@ -35,7 +36,7 @@ func EditProfController(proreq *pb.Proreq) (*pb.Status, error) {
 
 type Proreqs []*pb.Proreq
 
-func SearchProfController(id *pb.UserId) (*pb.ProreqList, error) {
+func SearchProfController(id *pb.UserId, stream pb.Tsukupro_SearchProfServer) error {
 	var list Proreqs
 	proreq := &pb.Proreq{
 		TxId:   "000",
@@ -51,9 +52,12 @@ func SearchProfController(id *pb.UserId) (*pb.ProreqList, error) {
 		Data:   []byte("name"),
 	}
 	list = append(list, proreq2)
-	return &pb.ProreqList{
-		Req: list,
-	}, nil
+	for _, prof := range list {
+		if err := stream.Send(prof); err != nil {
+			return err
+		}
+	}
+	return nil
 }
 
 func existId(id int32, dbmap *gorp.DbMap) bool {
