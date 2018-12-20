@@ -75,3 +75,16 @@ func (c *ClientInfo) Create() error {
 	fmt.Printf("result: %s\n", res)
 	return nil
 }
+
+func (c *ClientInfo) FriendRequest() error {
+	frereq := &proto.FriendReq{
+		UserId:   23,
+		FriendId: 43,
+	}
+	res, err := c.Conn.FriendRequest(context.TODO(), frereq)
+	if err != nil {
+		return err
+	}
+	fmt.Printf("res %s\n", res)
+	return nil
+}

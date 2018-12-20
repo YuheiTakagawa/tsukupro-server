@@ -44,5 +44,7 @@ func main() {
 		c.Search()
 	case "new":
 		c.Create()
+	case "friend":
+		c.FriendRequest()
 	}
 }
