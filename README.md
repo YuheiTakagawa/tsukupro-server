@@ -1,2 +1,1 @@
 # tsukupro-server
-test
